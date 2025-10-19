@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(vercel dev --yes)",
+      "Bash(start index.html)",
+      "Bash(firefox index.html)",
+      "Bash(start firefox \"D:\\Dropbox\\Projects\\shir-openu\\DF\\20218_2nd\\DF_3\\index.html\")",
+      "Bash(git add api/ai-hint.js index.html)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd EXERCISE_MODE control and attempt counting - Exam mode with 10 attempts\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push)",
+      "Bash(vercel login)",
+      "Bash(vercel --prod)",
+      "Bash(git add index.html)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nUpdate API endpoint to new Vercel deployment\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git commit -m \"Update API endpoint to stable Vercel production domain\")",
+      "Bash(vercel inspect --prod)",
+      "Bash(vercel ls)",
+      "Bash(git commit -m \"Update API endpoint to new Vercel project ode-20218-2nd-df-3\")",
+      "Bash(git commit -m \"Remove parsing error message - let Gemini handle all input validation\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
