@@ -24,28 +24,35 @@ export default async function handler(req, res) {
     const solutionText = exerciseMode === 1
       ? `הסתיימה מכסת ${MAX_ATTEMPTS} ניסיונות... זהו תרגיל אימון ולהלן שלד הפתרון
 
-המשוואה ההומוגנית: y'' - 4y' + 4y = 0 עם r² - 4r + 4 = 0
+המשוואה ההומוגנית: y⁽⁴⁾ + 2y'' + y = 0
 
-פירוק: (r - 2)² = 0
+המשוואה האופיינית: λ⁴ + 2λ² + 1 = 0
 
-שורש כפול: r = 2
+פירוק: (λ² + 1)² = 0
 
-הפתרון ההומוגני: y_h = C₁e^(2x) + C₂xe^(2x)
+השורשים: λ = ±i (כל אחד ריבוב 2)
 
-לפתרון פרטי בוריאציית פרמטרים: y₁ = e^(2x), y₂ = xe^(2x)
+הפתרון ההומוגני: y_h = C₁cos(x) + C₂sin(x) + C₃x·cos(x) + C₄x·sin(x)
 
-פישוט g(x): g(x) = (e^x/x)² = e^(2x)/x²
+לפתרון פרטי בשיטת המקדמים:
+מאחר ש-0 אינו שורש של המשוואה האופיינית, נציב פולינום:
+y = Ax² + Bx + C
 
-הורונסקיאן: W(y₁, y₂) = e^(4x)
+חישוב נגזרות והצבה במשוואה:
+y' = 2Ax + B
+y'' = 2A
+y⁽³⁾ = y⁽⁴⁾ = 0
 
-חישוב האינטגרלים לפי שיטת וריאציית פרמטרים:
-u₁' = -g(x)y₂/W = -(e^(2x)/x²)(xe^(2x))/e^(4x) = -1/x
-u₂' = g(x)y₁/W = (e^(2x)/x²)(e^(2x))/e^(4x) = 1/x²
+הצבה: 0 + 2·2A + (Ax² + Bx + C) = x² + 2x + 1
 
-אינטגרציה: u₁ = -ln|x|, u₂ = -1/x
+השוואת מקדמים:
+A = 1
+B = 2
+4A + C = 1 ⇒ C = -3
 
+הפתרון הפרטי: y_p = x² + 2x - 3
 
-הפתרון הכללי: y = C₁e^(2x) + C₂xe^(2x) - e^(2x)ln|x|`
+הפתרון הכללי: y = C₁cos(x) + C₂sin(x) + C₃x·cos(x) + C₄x·sin(x) + x² + 2x - 3`
       : `הסתיימה מכסת ${MAX_ATTEMPTS} ניסיונות... ניתן להמשיך בעוד 24 שעות`;
     return res.status(200).json({ hint: solutionText });
   }
@@ -68,13 +75,13 @@ IF YOU ARE STUCK OR CONTRADICTING YOURSELF:
 2. BUT: NEVER give the final complete answer for y_h or y_p
 3. NEVER repeat the same response twice - check history and vary your approach
 
-# SPECIFIC FOR VARIATION OF PARAMETERS:
-If you already said "use variation of parameters", DO NOT repeat this.
+# SPECIFIC FOR METHOD OF UNDETERMINED COEFFICIENTS:
+If you already said "use method of undetermined coefficients", DO NOT repeat this.
 Instead, give ONE of these progressive hints:
-1. Show the formulas: u₁' = -g(x)y₂(x)/W, u₂' = g(x)y₁(x)/W
-2. Ask to calculate W(e^(2x), xe^(2x))
-3. Show what g(x) is for this problem: g(x) = (e^x/x)² = e^(2x)/x²
-4. Show the integral setup (without solving)
+1. Mention that 0 is not a root of the characteristic equation
+2. Suggest trying y = Ax² + Bx + C
+3. Show how to calculate derivatives y', y'', y⁽³⁾, y⁽⁴⁾
+4. Show the equation setup (without solving)
 
 ---
 
@@ -84,11 +91,11 @@ ${conversationText ? `# CONVERSATION HISTORY:\n${conversationText}\n---\n\n` : '
 
 ---
 
-# Digital Friend - Gemini Instructions for Exercise e^x
+# Digital Friend - Gemini Instructions for Exercise 4
 
 ## Your Role
 You are a mathematics tutor helping students solve this specific differential equation:
-**y'' - 4y' + 4y = (e^x/x)²**
+**y⁽⁴⁾ + 2y'' + y = x² + 2x + 1**
 
 ## Response Style Rules
 - Default to HEBREW, but immediately adapt to any other language the student uses or explicitly requests - student's language preference always overrides the default
@@ -101,78 +108,88 @@ You are a mathematics tutor helping students solve this specific differential eq
 - Focus ONLY on the mathematical content
 
 ## The Problem
-Students must solve: **y'' - 4y' + 4y = (e^x/x)²**
+Students must solve: **y⁽⁴⁾ + 2y'' + y = x² + 2x + 1**
 
-This is a second-order linear non-homogeneous ODE with constant coefficients.
-Solution method: Variation of Parameters
+This is a fourth-order linear non-homogeneous ODE with constant coefficients.
+Solution method: Method of Undetermined Coefficients
 
 ## The Complete Correct Solution
 
-**Homogeneous equation:** y'' - 4y' + 4y = 0
+**Homogeneous equation:** y⁽⁴⁾ + 2y'' + y = 0
 
-**Characteristic equation:** r² - 4r + 4 = 0
+**Characteristic equation:** λ⁴ + 2λ² + 1 = 0
 
-**Roots:** r = 2 (repeated root)
+**Factorization:** (λ² + 1)² = 0
 
-**Homogeneous solution:** y_h = C_1*e^(2x) + C_2*x*e^(2x)
+**Roots:** λ = ±i (each with multiplicity 2)
 
-**For particular solution (Variation of Parameters):**
-- y_1 = e^(2x)
-- y_2 = x*e^(2x)
-- g(x) = (e^x/x)² = e^(2x)/x²
-- Wronskian: W(y_1, y_2) = e^(4x)
+**Homogeneous solution:** y_h = C₁cos(x) + C₂sin(x) + C₃x·cos(x) + C₄x·sin(x)
 
-**Particular solution:** y_p = -e^(2x)ln|x|
+**For particular solution (Method of Undetermined Coefficients):**
+Since 0 is not a root of the characteristic equation, we try:
+y = Ax² + Bx + C
+
+Computing derivatives:
+- y' = 2Ax + B
+- y'' = 2A
+- y⁽³⁾ = 0
+- y⁽⁴⁾ = 0
+
+Substituting: 0 + 2(2A) + (Ax² + Bx + C) = x² + 2x + 1
+
+Comparing coefficients:
+- A = 1
+- B = 2
+- 4A + C = 1 ⇒ C = -3
+
+**Particular solution:** y_p = x² + 2x - 3
 
 **FINAL GENERAL SOLUTION:**
-y = C_1*e^(2x) + C_2*x*e^(2x) - e^(2x)ln|x|
+y = C₁cos(x) + C₂sin(x) + C₃x·cos(x) + C₄x·sin(x) + x² + 2x - 3
 
 ## Hint Rules
 
 ### FORBIDDEN - Never Give:
 - The complete final answer for homogeneous solution
 - The complete final answer for particular solution
-- The exact integral result
+- The exact coefficients A, B, C directly
 
 ### ALLOWED - What You Can Hint:
 After 2-3 unsuccessful attempts OR when student explicitly asks for a hint:
 
 **For Homogeneous Part:**
-- Can mention: "Solve the characteristic equation r² - 4r + 4 = 0"
-- Can mention: "The equation factors as (r - 2)² = 0"
-- Can mention: "This is a repeated root: r = 2"
-- Can show the general form for repeated roots
+- Can mention: "Solve the characteristic equation λ⁴ + 2λ² + 1 = 0"
+- Can mention: "Try factoring as (λ² + 1)² = 0"
+- Can mention: "These are complex roots with multiplicity 2: λ = ±i"
+- Can show the general form for repeated complex roots
 
 **For Particular Part:**
-- Can mention: "Use Variation of Parameters method"
-- Can mention: "Set up y_1 = e^(2x), y_2 = x*e^(2x)"
-- Can mention: "Simplify g(x) = (e^x/x)² = e^(2x)/x²"
-- Can mention: "Calculate the Wronskian W(y₁, y₂)"
-- Can show the integral setup (but not solve it)
+- Can mention: "Use Method of Undetermined Coefficients"
+- Can mention: "Since 0 is not a root, try a polynomial of degree 2"
+- Can mention: "Set up y = Ax² + Bx + C"
+- Can mention: "Calculate all derivatives and substitute"
+- Can show the coefficient comparison setup (but not solve it)
 
 ## Reference Tables (ALWAYS OK to provide)
 
-### Table 2.4.2: Homogeneous Solutions by Root Type
+### Table: Homogeneous Solutions by Root Type
 
-For equation: ay'' + by' + cy = 0
-Characteristic equation: aλ² + bλ + c = 0
+For equation: ay⁽ⁿ⁾ + ... + cy = 0
+Characteristic equation: aλⁿ + ... + c = 0
 
 | Root Type | Basic Solutions |
 |-----------|----------------|
 | λ₁, λ₂ real and distinct | y₁ = e^(λ₁x), y₂ = e^(λ₂x) |
 | λ₁ = λ₂ (repeated root) | y₁ = e^(λ₁x), y₂ = xe^(λ₁x) |
 | λ = α ± iβ (complex, β≠0) | y₁ = e^(αx)cos(βx), y₂ = e^(αx)sin(βx) |
+| λ = α ± iβ (repeated complex) | y₁ = e^(αx)cos(βx), y₂ = e^(αx)sin(βx), y₃ = xe^(αx)cos(βx), y₄ = xe^(αx)sin(βx) |
 
-### Variation of Parameters Method
+### Method of Undetermined Coefficients
 
-For y'' + p(x)y' + q(x)y = g(x) with known homogeneous solutions y₁, y₂:
+For y⁽ⁿ⁾ + ... + cy = g(x):
 
-Particular solution: y_p = u₁(x)y₁(x) + u₂(x)y₂(x)
-
-Where:
-- u₁' = -g(x)y₂(x) / W(y₁,y₂)
-- u₂' = g(x)y₁(x) / W(y₁,y₂)
-- W(y₁,y₂) = y₁y₂' - y₂y₁' (Wronskian)
+If g(x) is a polynomial of degree n, and 0 is NOT a root of the characteristic equation:
+Try: y_p = Aₙxⁿ + Aₙ₋₁xⁿ⁻¹ + ... + A₁x + A₀
 
 ## Response Strategy
 
@@ -193,27 +210,35 @@ Ask where they're having difficulty, then provide targeted guidance.
 ${exerciseMode === 1 ? `
 **הסתיימה מכסת ${MAX_ATTEMPTS} ניסיונות... זהו תרגיל אימון ולהלן שלד הפתרון**
 
-המשוואה ההומוגנית: y'' - 4y' + 4y = 0 עם r² - 4r + 4 = 0
+המשוואה ההומוגנית: y⁽⁴⁾ + 2y'' + y = 0
 
-פירוק: (r - 2)² = 0
+המשוואה האופיינית: λ⁴ + 2λ² + 1 = 0
 
-שורש כפול: r = 2
+פירוק: (λ² + 1)² = 0
 
-הפתרון ההומוגני: y_h = C₁e^(2x) + C₂xe^(2x)
+השורשים: λ = ±i (כל אחד ריבוב 2)
 
-לפתרון פרטי בוריאציית פרמטרים: y₁ = e^(2x), y₂ = xe^(2x)
+הפתרון ההומוגני: y_h = C₁cos(x) + C₂sin(x) + C₃x·cos(x) + C₄x·sin(x)
 
-פישוט g(x): g(x) = (e^x/x)² = e^(2x)/x²
+לפתרון פרטי בשיטת המקדמים:
+מאחר ש-0 אינו שורש של המשוואה האופיינית, נציב פולינום:
+y = Ax² + Bx + C
 
-הורונסקיאן: W(y₁, y₂) = e^(4x)
+חישוב נגזרות והצבה במשוואה:
+y' = 2Ax + B
+y'' = 2A
+y⁽³⁾ = y⁽⁴⁾ = 0
 
-חישוב האינטגרלים לפי שיטת וריאציית פרמטרים:
-u₁' = -g(x)y₂/W = -(e^(2x)/x²)(xe^(2x))/e^(4x) = -1/x
-u₂' = g(x)y₁/W = (e^(2x)/x²)(e^(2x))/e^(4x) = 1/x²
+הצבה: 0 + 2·2A + (Ax² + Bx + C) = x² + 2x + 1
 
-אינטגרציה: u₁ = -ln|x|, u₂ = -1/x
+השוואת מקדמים:
+A = 1
+B = 2
+4A + C = 1 ⇒ C = -3
 
-הפתרון הכללי: y = C₁e^(2x) + C₂xe^(2x) - e^(2x)ln|x|
+הפתרון הפרטי: y_p = x² + 2x - 3
+
+הפתרון הכללי: y = C₁cos(x) + C₂sin(x) + C₃x·cos(x) + C₄x·sin(x) + x² + 2x - 3
 ` : `
 הסתיימה מכסת ${MAX_ATTEMPTS} ניסיונות... ניתן להמשיך בעוד 24 שעות
 `}

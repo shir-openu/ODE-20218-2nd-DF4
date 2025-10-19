@@ -269,53 +269,54 @@ const EXERCISE_MODE = 0; // TESTING EXAM MODE
 /* מבנה נתונים של תרגילים */
 const problems = [
   {
-    id: 'ode_second_order_variation_params_01',
-    title: 'מסדר שני — וריאציית פרמטרים',
+    id: 'ode_fourth_order_undetermined_coeffs_01',
+    title: 'מסדר רביעי – שיטת המקדמים',
     
-    latexProblem: String.raw`y'' - 4y' + 4y = \left(\frac{e^x}{x}\right)^2`,
-    homogeneousSolution: String.raw`y_h = C_1 e^{2x} + C_2 x e^{2x}`,
-    particularSolution: String.raw`y_p = -\frac{e^{2x}}{x}`,
+    latexProblem: String.raw`y^{(4)} + 2y'' + y = x^2 + 2x + 1`,
+    homogeneousSolution: String.raw`y_h = C_1 \cos x + C_2 \sin x + C_3 x \cos x + C_4 x \sin x`,
+    particularSolution: String.raw`y_p = x^2 + 2x - 3`,
     exampleInput: '',
     
     hint1Html: `
-      זוהי משוואה לינארית אי-הומוגנית מסדר שני עם מקדמים קבועים.<br/>
-      השתמשו בשיטת וריאציית הפרמטרים לפתרון.<br/>
-      הפתרון הכללי: \\(y = y_h + y_p\\)<br/>
-      כאשר \\(y_h\\) הוא הפתרון של המשוואה ההומוגנית \\(y'' - 4y' + 4y = 0\\)<br/>
-      המשוואה האופיינית: \\(r^2 - 4r + 4 = 0\\) שמתפרקת ל-\\((r-2)^2 = 0\\)<br/>
-      שורש כפול: \\(r = 2\\)<br/>
-      מהו הפתרון ההומוגני?
+      זוהי משוואה לינארית אי-הומוגנית מסדר רביעי עם מקדמים קבועים.<br/>
+      המשוואה ההומוגנית: \\(y^{(4)} + 2y'' + y = 0\\).<br/>
+      המשוואה האופיינית: \\(r^4 + 2r^2 + 1 = 0\\).<br/>
+      ניתן לפרק: \\((r^2 + 1)^2 = 0\\).<br/>
+      השורשים: \\(r = \pm i\\) (כל אחד בריבוי 2).<br/>
+      מערכת פתרונות: \\(\\{\cos x, \sin x, x\cos x, x\sin x\\}\\).
     `,
     
     hint2Html: `
-      הפתרון ההומוגני: \\(y_h = C_1 e^{2x} + C_2 x e^{2x}\\)<br/>
-      לוריאציית פרמטרים: \\(y_1 = e^{2x}, y_2 = x e^{2x}\\)<br/>
-      פישוט g(x): \\(g(x) = \\left(\\frac{e^x}{x}\\right)^2 = \\frac{e^{2x}}{x^2}\\)<br/>
-      חשבו את הרונסקיאן: \\(W(y_1, y_2) = \\begin{vmatrix} e^{2x} & xe^{2x} \\\\ 2e^{2x} & e^{2x}(1+2x) \\end{vmatrix}\\)<br/>
-      הפתרון הפרטי: \\(y_p = -y_1 \\int \\frac{y_2 g(x)}{W} dx + y_2 \\int \\frac{y_1 g(x)}{W} dx\\)
+      הפתרון ההומוגני: \\(y_h = C_1 \cos x + C_2 \sin x + C_3 x \cos x + C_4 x \sin x\\).<br/>
+      לפתרון פרטי השתמשו בשיטת המקדמים.<br/>
+      מאחר ש-\\(0\\) אינו שורש של המשוואה האופיינית, נציב: \\(y = Ax^2 + Bx + C\\).<br/>
+      חשבו נגזרות: \\(y' = 2Ax + B\\), \\(y'' = 2A\\), \\(y^{(3)} = 0\\), \\(y^{(4)} = 0\\).<br/>
+      הציבו במשוואה והשוו מקדמים: \\(A = 1, B = 2, C = -3\\).
     `,
     
-    solutionDisplayLatex: String.raw`y = C_1 e^{2x} + C_2 x e^{2x} - \frac{e^{2x}}{x}`,
+    solutionDisplayLatex: String.raw`y = C_1 \cos x + C_2 \sin x + C_3 x \cos x + C_4 x \sin x + x^2 + 2x - 3`,
+    
     solutionStepsHtml: `
-      המשוואה ההומוגנית: \\(y'' - 4y' + 4y = 0\\) עם \\(r^2 - 4r + 4 = 0\\).<br/>
-      פירוק: \((r-2)^2 = 0\).<br/>
-      שורש כפול: \(r = 2\).<br/>
-      הפתרון ההומוגני: \(y_h = C_1 e^{2x} + C_2 x e^{2x}\).<br/>
-      לפתרון פרטי בוריאציית פרמטרים: \(y_1 = e^{2x}, y_2 = x e^{2x}\).<br/>
-      פישוט g(x): \(g(x) = \left(\frac{e^x}{x}\right)^2 = \frac{e^{2x}}{x^2}\).<br/>
-      הרונסקיאן: \(W(y_1, y_2) = e^{4x}\).<br/>
-      חישוב האינטגרלים לפי וריאציית פרמטרים:<br/>
-      \(u_1' = -\frac{g(x)y_2}{W} = -\frac{1}{x}\), \(u_2' = \frac{g(x)y_1}{W} = \frac{1}{x^2}\).<br/>
-      אינטגרציה: \(u_1 = -\ln|x|\), \(u_2 = -\frac{1}{x}\).<br/>
-      לאחר עיבוד מתקבל: \(y_p = -\frac{e^{2x}}{x}\).<br/>
-      הפתרון הכללי: \(y = C_1 e^{2x} + C_2 x e^{2x} - \frac{e^{2x}}{x}\).
+      המשוואה ההומוגנית: \\(y^{(4)} + 2y'' + y = 0\\) עם \\(r^4 + 2r^2 + 1 = 0\\).<br/>
+      פירוק: \\((r^2 + 1)^2 = 0\\).<br/>
+      שורשים מרוכבים בריבוי 2: \\(r = \pm i\\).<br/>
+      הפתרון ההומוגני: \\(y_h = C_1 \cos x + C_2 \sin x + C_3 x \cos x + C_4 x \sin x\\).<br/>
+      לפתרון פרטי בשיטת המקדמים: \\(y = Ax^2 + Bx + C\\).<br/>
+      חישוב נגזרות: \\(y' = 2Ax + B\\), \\(y'' = 2A\\), \\(y^{(3)} = y^{(4)} = 0\\).<br/>
+      הצבה במשוואה: \\(0 + 2 \cdot 2A + (Ax^2 + Bx + C) = x^2 + 2x + 1\\).<br/>
+      השוואת מקדמים:<br/>
+      מקדם \\(x^2\\): \\(A = 1\\).<br/>
+      מקדם \\(x\\): \\(B = 2\\).<br/>
+      מקדם חופשי: \\(4A + C = 1 \Rightarrow C = -3\\).<br/>
+      הפתרון הפרטי: \\(y_p = x^2 + 2x - 3\\).<br/>
+      הפתרון הכללי: \\(y = C_1 \cos x + C_2 \sin x + C_3 x \cos x + C_4 x \sin x + x^2 + 2x - 3\\).
     `,
     
     check: {
-      type: 'variation_parameters_form',
-      homogeneousTerms: ['exp(2*x)', 'x*exp(2*x)'],
-      particularTerm: 'exp(2*x)/x',
-      particularCoeff: -1
+      type: 'undetermined_coefficients_form',
+      homogeneousTerms: ['cos(x)', 'sin(x)', 'x*cos(x)', 'x*sin(x)'],
+      particularTerm: 'x^2+2*x-3',
+      particularCoeff: 1
     }
   }
 ];
