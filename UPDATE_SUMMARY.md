@@ -121,7 +121,7 @@ y = C₁cos(x) + C₂sin(x) + C₃x·cos(x) + C₄x·sin(x) + x² + 2x - 3
 - **URL:** https://shir-openu.github.io/ODE-20218-2nd-DF4/
 
 ### Google API Key
-- **Key ID:** AIzaSyC67jVNUnEzWudQLbqyo-_4LrFRrl2th6M
+- **Key ID:** REDACTED_SEE_VERCEL_ENV_GOOGLE_API_KEY
 - **Console:** https://aistudio.google.com/app/apikey
 
 ---
